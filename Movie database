@@ -1,48 +1,63 @@
-#!/usr/bin/python
 import sqlite3
-conn=sqlite3.connect('movies.db');
+conn=sqlite3.connect('MOVIE.db')
 #creation of table
-conn.execute('''CREATE TABLE MOVIE
-		(ID INT PRIMARY KEY NOT NULL,
-		NAME TEXT NOT NULL,
-	        ACTOR TEXT NOT NULL,
-		ACTRESS TEXT NOT NULL,
-		DIRECTOR TEXT NOT NULL,
-		YEAR OF RELEASE TEXT NOT NULL);''')
-conn.commit();
-
+cursor = conn.cursor()
+cursor.execute("DROP TABLE IF EXISTS MOVIE")
+sql ='''CREATE TABLE MOVIE(ID INT PRIMARY KEY NOT NULL,NAME TEXT NOT NULL,ACTOR TEXT NOT NULL,ACTRESS TEXT NOT NULL, DIRECTOR TEXT NOT NULL,YEAR_OF_RELEASE TEXT NOT NULL)'''
+cursor.execute(sql)
+print("Table created successfully........")
 
 #Inserting of data into table
-conn.execute('INSERT INTO TABLE(ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR OF RELEASE)
-	    VALUES (1,"Pushpa","Allu Arjun","Rashmika Mandanna","Sukumar",2022)');
-conn.execute('INSERT INTO TABLE(ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR OF RELEASE)
-	    VALUES (2,"Baahubali","Prabhas","Anushka Shetty","S.S.RajaMouli",2015)');
-conn.execute('INSERT INTO TABLE(ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR OF RELEASE)
-	    VALUES (3,"Radhe Shyam","Prabhas","Pooja Hegde","Radhe Krishna Kumar",2022)');
-conn.execute('INSERT INTO TABLE(ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR OF RELEASE)
-	    VALUES (4,"KGF 2","Yash","Srinidhi Shetty","Prashanth Neel",2022)');
-conn.execute('INSERT INTO TABLE(ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR OF RELEASE)
-	    VALUES (5,"RRR","N.T.Rama Rao jr.","Alia Bhatt","S.S.RajaMouli",2022)');
-conn.commit();
+cursor.execute('''INSERT INTO MOVIE(
+   ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR_OF_RELEASE) VALUES
+   (1,"Pushpa","Allu Arjun","Rashmika Mandanna","Sukumar",2022)''')
 
+cursor.execute('''INSERT INTO MOVIE(
+   ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR_OF_RELEASE) VALUES
+   (2,"Baahubali","Prabhas","Anushka Shetty","S.S.RajaMouli",2015)''')
+
+cursor.execute('''INSERT INTO MOVIE(
+   ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR_OF_RELEASE) VALUES
+   (3,"Radhe Shyam","Prabhas","Pooja Hegde","Radhe Krishna Kumar",2022)''')
+
+cursor.execute('''INSERT INTO MOVIE(
+  ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR_OF_RELEASE) VALUES
+   (4,"KGF 2","Yash","Srinidhi Shetty","Prashanth Neel",2022)''')
+
+cursor.execute('''INSERT INTO MOVIE(
+   ID,NAME,ACTOR,ACTRESS,DIRECTOR,YEAR_OF_RELEASE) VALUES
+   (5,"RRR","N.T.Rama Rao jr.","Alia Bhatt","S.S.RajaMouli",2022)''')
+
+conn.commit()
+print("Records inserted........")
 
 #Query using Select Statement
 #Retrieve all Rows from Table
-cursor=conn.execute('SELECT * FROM MOVIE');
+cursor.execute('''SELECT * from MOVIE''')
+print(cursor.fetchone())
+cursor.execute('''SELECT * from MOVIE''')
+print(cursor.fetchall())
+cursor.execute('''SELECT * from MOVIE''')
 for row in cursor:
-	print "ID=",row[0]
-	print "NAME=",row[1]
-	print "ACTOR=",row[2]
-        print "ACTRESS=",row[3]
-        print "DIRECTOR=",row[4],"\n"
-	print "YEAR OF RELEASE=",row[5],"\n"
+    print ("ID=",row[0])
+    print ("NAME=",row[1])
+    print ("ACTOR=",row[2])
+    print ("ACTRESS=",row[3])
+    print ("DIRECTOR=",row[4])
+    print ("YEAR_OF_RELEASE=",row[5],"\n")
+conn.commit()
+
 #Retrieve movies based from actor's name
-cursor=conn.execute('SELECT * FROM MOVIE WHERE ACTOR="Prabhas"');
+cursor.execute("SELECT * from MOVIE WHERE ACTOR='Prabhas'")
+print(cursor.fetchall())
+cursor.execute("SELECT * from MOVIE WHERE ACTOR='Prabhas'")
+print(cursor.fetchone())
+cursor=conn.execute('SELECT * FROM MOVIE WHERE ACTOR="Prabhas"')
 for row in cursor:
-	print "ID=",row[0]
-	print "NAME=",row[1]
-	print "ACTOR=",row[2]
-        print "ACTRESS=",row[3]
-        print "DIRECTOR=",row[4],"\n"
-	print "YEAR OF RELEASE=",row[5],"\n"
-conn.close();
+    print ("ID=",row[0])
+    print ("NAME=",row[1])
+    print ("ACTOR=",row[2])
+    print ("ACTRESS=",row[3])
+    print ("DIRECTOR=",row[4])
+    print ("YEAR OF RELEASE=",row[5],"\n")
+conn.close()
